@@ -1,0 +1,42 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>The Great Wave off Kanagawa</title>
+
+<script src="helpers/AffineTransform2D.js"></script>
+<script src="scenes/mainscene.js"></script>
+<script src="helpers/shapes.js"></script>
+<script src="scenes/bigwave.js"></script>
+<script src="scenes/accents.js"></script>.
+<script src="scenes/foreground.js"></script>
+<script src="scenes/bigwave.js"></script>
+<script src="helpers/geometries.js"></script>
+<script src="shaders.js"></script>
+
+</head>
+
+<body onload="initGL()" style="background-color: lightGray">
+
+<h2>The Great Wave off Kanagawa</h2>
+
+<noscript><p><b>Sorry, but this page requires JavaScript.</b></p></noscript>
+
+<h2><label><input type="checkbox" id="multiCheckbox"><b>General Changes</b></label></h2>
+
+<p><b>Choose Piece of Wave to Draw</b>
+    <select id="sceneselect">
+       <option>Background</option>
+       <option>The Wave</option>
+       <option >Fractal</option>
+       <option selected="selected">Foreground</option>
+       <option >Ocean Spray</option>
+       <option >All </option>
+    </select>
+</p>
+
+<div id="canvas-holder">
+    <canvas id="webglcanvas" width="1200" height="800"></canvas>
+</div>
+
+</body>
+</html>

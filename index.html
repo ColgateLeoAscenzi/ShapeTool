@@ -1,0 +1,51 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Shape Tool</title>
+
+<script src="helpers/AffineTransform2D.js"></script>
+<script src="mainscene.js"></script>
+<script src="helpers/shapes.js"></script>
+<script src="helpers/geometries.js"></script>
+<script src="shaders.js"></script>
+
+</head>
+
+<body onload="initGL()" style="background-color: lightGray">
+
+<h2>Shape Tool</h2>
+
+<noscript><p><b>Sorry, but this page requires JavaScript.</b></p></noscript>
+
+
+<div id = "geom-control">
+    <div>Pick a number of sides</div>
+    <input type="range" min="3" max="1000" value="3" class="slider" id="sideRange">
+    <input type ="number" min = "3" max = "1000" value = 3 id = "textRange">
+</div>
+<div id = "color-control">
+    <div id = "color">
+        Color 1:
+        <input type ="number" min = "0" max = "255" value = 255 id = "color1R">
+        <input type ="number" min = "0" max = "255" value = 0 id = "color1G">
+        <input type ="number" min = "0" max = "255" value = 0 id = "color1B">
+    <div>
+    <div id = "color">
+        Color 2:
+        <input type ="number" min = "0" max = "255" value = 0 id = "color2R">
+        <input type ="number" min = "0" max = "255" value = 255 id = "color2G">
+        <input type ="number" min = "0" max = "255" value = 0 id = "color2B">
+    </div>
+    <div id = "color">
+        Color 3:
+        <input type ="number" min = "0" max = "255" value = 0 id = "color3R">
+        <input type ="number" min = "0" max = "255" value = 0 id = "color3G">
+        <input type ="number" min = "0" max = "255" value = 255 id = "color3B">
+    </div>
+</div>
+<div id="canvas-holder">
+    <canvas id="webglcanvas" width="1200" height="800"></canvas>
+</div>
+
+</body>
+</html>
