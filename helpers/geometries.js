@@ -10,12 +10,12 @@ function drawTriDemo(){
 
 function drawGeomDemo(){
 
-    colors = [];
+    angleColors = [];
     for(var i = 0; i < sideNumber; i++){
-        colors.push(concatColor([colors[0],colors[1],colors[2]]));
+        angleColors.push(concatColor([colors[0],colors[1],colors[2]]));
     }
     pushTransform();
-        shape(defCenter, testColors, sideNumber, defSideLen);
+        shape(defCenter, angleColors, sideNumber, defSideLen);
     popTransform();
 
 }

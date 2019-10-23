@@ -148,21 +148,24 @@ function initGL() {
     document.getElementById("geom-color-control").style.display = "none";
     document.getElementById("ball-color-control").style.display = "none";
 
+    //overall controll
+    document.getElementById("selector").onchange = changeDrawing;
+
 
     //triangles
     document.getElementById("tri-angles").onchange = doChangeAngles;
 
-    document.getElementById("geom-color1").onchange = doChangeColor;
-    document.getElementById("geom-color2").onchange = doChangeColor;
-    document.getElementById("geom-color3").onchange = doChangeColor;
-
+    document.getElementById("tri-color").onchange = doChangeColorTri;
+    document.getElementById("tri-color1").onchange = doChangeColorTri;
+    document.getElementById("tri-color2").onchange = doChangeColorTri;
     //geometry
     document.getElementById("sideRange").onchange = doChangeSides;
     document.getElementById("textRange").onchange = doChangeSides1;
 
-    document.getElementById("geom-color4").onchange = doChangeColor;
-    document.getElementById("geom-color5").onchange = doChangeColor;
-    document.getElementById("geom-color6").onchange = doChangeColor;
+    document.getElementById("geom-color").onchange = doChangeColorGeom;
+    document.getElementById("geom-color1").onchange = doChangeColorGeom;
+    document.getElementById("geom-color2").onchange = doChangeColorGeom;
+
 
     //ball
 
@@ -174,12 +177,34 @@ function initGL() {
 
 }
 /*-----------side support-------------*/
+
+function changeDrawing(){
+    scene = parseInt(document.getElementById("selector").selectedIndex);
+    if(parseInt(document.getElementById("selector").selectedIndex)== 0){
+        document.getElementById("tri-color-control").style.display = "block";
+        document.getElementById("geom-color-control").style.display = "none";
+        document.getElementById("ball-color-control").style.display = "none";
+        doChangeColorTri();
+    }
+    if(parseInt(document.getElementById("selector").selectedIndex)== 1){
+        document.getElementById("tri-color-control").style.display = "none";
+        document.getElementById("geom-color-control").style.display = "block";
+        document.getElementById("ball-color-control").style.display = "none";
+        doChangeColorGeom();
+    }
+    if(parseInt(document.getElementById("selector").selectedIndex)== 2){
+        document.getElementById("tri-color-control").style.display = "none";
+        document.getElementById("geom-color-control").style.display = "none";
+        document.getElementById("ball-color-control").style.display = "block";
+        doChangeColorBall();
+    }
+}
 function doChangeAngles(){
     angles[0] = parseInt(document.getElementById("aAngle").value);
     angles[1] = parseInt(document.getElementById("bAngle").value);
     angles[2] = parseInt(document.getElementById("cAngle").value);
     if((angles[0] + angles[1] + angles[2])== 180){
-        doChangeColor();
+        doChangeColorTri();
     }
 }
 
@@ -187,22 +212,46 @@ function doChangeSides(){
     sideNumber = document.getElementById("sideRange").value;
     document.getElementById("textRange").value = sideNumber;
     console.log("Sidenumber: " +sideNumber);
-    doChangeColor();
+    doChangeColorGeom();
 }
 
 function doChangeSides1(){
     sideNumber = document.getElementById("textRange").value;
     document.getElementById("sideRange").value = sideNumber;
     console.log("Sidenumber: " +sideNumber);
-    doChangeColor();
+    doChangeColorGeom();
 }
 
-function doChangeColor(){
+function doChangeColorTri(){
     for(var i = 0; i < 3; i++){
         colors[i][0] = document.getElementById("geom-color"+(i+1)+"R").value/255;
         colors[i][1] = document.getElementById("geom-color"+(i+1)+"G").value/255;
         colors[i][2] = document.getElementById("geom-color"+(i+1)+"B").value/255;
         colors[i][3] = 1;
+
+    }
+    draw();
+}
+
+
+function doChangeColorGeom(){
+    for(var i = 0; i < 3; i++){
+        colors[i][0] = document.getElementById("geom-color"+(i+1)+"R1").value/255;
+        colors[i][1] = document.getElementById("geom-color"+(i+1)+"G1").value/255;
+        colors[i][2] = document.getElementById("geom-color"+(i+1)+"B1").value/255;
+        colors[i][3] = 1;
+
+    }
+    draw();
+}
+
+function doChangeColorBall(){
+    for(var i = 0; i < 3; i++){
+        colors[i][0] = document.getElementById("geom-color"+(i+1)+"R1").value/255;
+        colors[i][1] = document.getElementById("geom-color"+(i+1)+"G1").value/255;
+        colors[i][2] = document.getElementById("geom-color"+(i+1)+"B1").value/255;
+        colors[i][3] = 1;
+
     }
     draw();
 }

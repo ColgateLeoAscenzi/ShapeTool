@@ -2,6 +2,6 @@
 function drawScene(){
     pushTransform();
         transform.scale(0.66666,1);
-        drawTriDemo();
+        eval(scenes[scene]);
     popTransform();
 }
