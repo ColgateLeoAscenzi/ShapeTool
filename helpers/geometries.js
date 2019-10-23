@@ -15,7 +15,7 @@ function drawGeomDemo(){
         angleColors.push(concatColor([colors[0],colors[1],colors[2]]));
     }
     pushTransform();
-        shape(defCenter, angleColors, sideNumber, defSideLen);
+        shape(defCenter,[-0.3,0.4], angleColors, sideNumber, defSideLen);
     popTransform();
 
 }
@@ -27,7 +27,11 @@ function drawBallDemo(){
         angleColors.push(concatColor([colors[0],colors[1],colors[2]]));
     }
     pushTransform();
-        shape(defCenter, angleColors, sideNumber, defSideLen);
+        transform.translate(-0.5,0.8);
+        shape(defCenter,defCenter, [colors[0]], 30, 0.1);
+    popTransform();
+    pushTransform();
+        shape(defCenter,[-0.3, 0.4], angleColors, sideNumber, defSideLen);
     popTransform();
 
 }

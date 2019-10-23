@@ -31,7 +31,34 @@ function filledTriangle(color, vertices){
 }
 
 // ------------------- geometry shape helper -----------------------//
-function shape(center, color, sideNum, sideLength){
+// function shape(center, color, sideNum, sideLength){
+//     var sumOfIntAng = (sideNum-2)*180;
+//     var newColor = [];
+//     //generates new uniform colors if not specified
+//     if(color.length == 1){
+//         for(var i = 0; i < sideNum; i++){
+//             newColor.push(uniformColorGen(color[0], sideNum));
+//         }
+//     }
+//     else{
+//         newColor = color;
+//     }
+//     //aligns it so the bottom is flat
+//     pushTransform();
+//         transform.rotate(radians((-sumOfIntAng)/(2*sideNum)));
+//         transform.scale(3/sideNum);
+//         for(var i = 0; i < sideNum; i++){
+//             //makes triangles and rotate
+//             pushTransform();
+//                 transform.rotate(radians(360/sideNum)*i);
+//                 filledTriangle(newColor[i], genTriangle(center, sideLength, [(360/sideNum), (180-(360/sideNum))/2,(180-(360/sideNum))/2]));
+//             popTransform();
+//
+//         }
+//     popTransform();
+//
+// }
+function shape(center,newCenter, color, sideNum, sideLength){
     var sumOfIntAng = (sideNum-2)*180;
     var newColor = [];
     //generates new uniform colors if not specified
@@ -51,7 +78,11 @@ function shape(center, color, sideNum, sideLength){
             //makes triangles and rotate
             pushTransform();
                 transform.rotate(radians(360/sideNum)*i);
-                filledTriangle(newColor[i], genTriangle(center, sideLength, [(360/sideNum), (180-(360/sideNum))/2,(180-(360/sideNum))/2]));
+                var tempTriCoords = genTriangle(center, sideLength, [(360/sideNum), (180-(360/sideNum))/2,(180-(360/sideNum))/2]);
+                console.log(transform.undoRotate(newCenter[0], newCenter[1],(radians(360/sideNum)*i)));
+                tempTriCoords = fixCenter(tempTriCoords,
+                    transform.undoRotate(newCenter[0], newCenter[1],(radians(360/sideNum)*i)));
+                filledTriangle(newColor[i], tempTriCoords);
             popTransform();
 
         }
@@ -73,6 +104,24 @@ function genTriangle(center, side, angles){
     triCoord.push(center[0]+x);
     triCoord.push(center[0]+y);
     return triCoord;
+}
+
+function fixCenter(oldCoords, newCenter){
+    newCoords = []
+    // newCoords[0] = oldCoords[0];
+    // newCoords[1] = oldCoords[1];
+    // newCoords[2] = oldCoords[2];
+    // newCoords[3] = oldCoords[3];
+    // newCoords[4] = oldCoords[4];
+    // newCoords[5] = oldCoords[5];
+    newCoords[0] = newCenter[0];
+    newCoords[1] = newCenter[1];
+    newCoords[2] = oldCoords[2];
+    newCoords[3] = oldCoords[3];
+    newCoords[4] = oldCoords[4];
+    newCoords[5] = oldCoords[5];
+
+    return newCoords;
 }
 
 //-------Actual shapes to draw-----------//
