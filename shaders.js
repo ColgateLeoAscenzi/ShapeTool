@@ -58,6 +58,8 @@ var colors = [[1,0,0,1],[0,1,0,1],[0,0,1,1]];
 
 var angles = [60, 60, 60];
 
+var lightposition = [-0.7, 0.8];
+
 //Transforms
 var transform = new AffineTransform2D();
 var transformStack = [];
@@ -168,6 +170,7 @@ function initGL() {
 
 
     //ball
+    document.getElementById("lightSlider").onchange = doChangeLight;
     document.getElementById("sideRangeBall").onchange = doChangeSidesBall;
     document.getElementById("textRangeBall").onchange = doChangeSides1Ball;
 
@@ -181,7 +184,11 @@ function initGL() {
 
 }
 /*-----------side support-------------*/
-
+function doChangeLight(){
+    lightposition = [parseInt(document.getElementById("lightSlider").value)/100, 0.8];
+    console.log(lightposition);
+    doChangeColorBall();
+}
 function changeDrawing(){
     resetParams();
     scene = parseInt(document.getElementById("selector").selectedIndex);

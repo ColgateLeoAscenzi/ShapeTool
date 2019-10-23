@@ -77,11 +77,9 @@ function shape(center,newCenter, color, sideNum, sideLength){
         for(var i = 0; i < sideNum; i++){
             //makes triangles and rotate
             pushTransform();
-                transform.rotate(radians(360/sideNum)*i);
+                transform.rotateAbout(newCenter[0], newCenter[1], radians(360/sideNum)*i);
                 var tempTriCoords = genTriangle(center, sideLength, [(360/sideNum), (180-(360/sideNum))/2,(180-(360/sideNum))/2]);
-                console.log(transform.undoRotate(newCenter[0], newCenter[1],(radians(360/sideNum)*i)));
-                tempTriCoords = fixCenter(tempTriCoords,
-                    transform.undoRotate(newCenter[0], newCenter[1],(radians(360/sideNum)*i)));
+                tempTriCoords = fixCenter(tempTriCoords, genTriangle(center, sideLength, newCenter[0], newCenter[1],(radians(360/sideNum)*i)));
                 filledTriangle(newColor[i], tempTriCoords);
             popTransform();
 
@@ -139,10 +137,6 @@ function hexagon(center, color, side){
 }
 
 //*------------------ Helpers ---------------------------//
-function radians( degrees ) {
-  return degrees * Math.PI / 180.0;
-}
-
 function uniformColorGen(color, sides){
     var colorArr = [];
     for(var i = 0; i < sides; i++){
@@ -163,4 +157,49 @@ function concatColor(colors){
         }
     }
     return outColor;
+}
+
+function radians( degrees ) {
+  return degrees * Math.PI / 180.0;
+}
+
+function polarToCart(pPoint) {
+    //point = [r, degrees]
+    var r = pPoint[0];
+    var degrees = pPoint[1]
+    return [r*Math.cos(radians(degrees)), r*Math.sin(radians(degrees))];
+}
+
+function cartToPolar(cPoint){
+    //point= = [x, y]
+    var x = cPoint[0];
+    var y = cPoint[1];
+    return [Math.sqrt(x**2 + y**2), Math.atan(y/x)*180/Math.PI];
+}
+
+function shinePos(lightPos, circleCenter){
+    var lx = lightPos[0];
+    var ly = lightPos[1];
+    var cx = circleCenter[0];
+    var cy = circleCenter[1];
+
+    //subtract circle center from lightsource to get lightsource adjusted to 0
+    //convert to polar and shorten radius by theoretical Z axis, here 1/7th of
+    //original R. Convert back to cartesian centered around 0, then add circleCenter
+    //back to get the official light center and return it
+    var shineP = cartToPolar([lx-cx,ly-cy]);
+    if(lx >= 0){
+        var shineC = polarToCart([shineP[0]/5, shineP[1]]);
+
+    }
+    else{
+        var shineC = polarToCart([-shineP[0]/5, shineP[1]]);
+
+    }
+
+    shineC[0]+=cx;
+    shineC[1]+=cy;
+
+    return shineC;
+
 }

@@ -107,11 +107,3 @@ AffineTransform2D.prototype.scaleAbout = function(
    this.translate(-x,-y);
    return this;
 }
-
-AffineTransform2D.prototype.undoRotate = function(x, y, angle) {
-    var newa = x*this.a + y*this.c + 0;
-    var newb = x*this.b + y*this.b + 0;
-
-
-    return [newa, newb];
-}
