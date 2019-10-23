@@ -1,15 +1,21 @@
-var defcenter = [0,0];
+var defCenter = [0,0];
 var defSideLen = 1;
 
-function drawGeom(){
+function drawTriDemo(){
+    pushTransform();
+        transform.translate(-0.5,-0.4);
+        filledTriangle(concatColor([colors[0],colors[1],colors[2]]), genTriangle(defCenter, defSideLen, [angles[0], angles[1], angles[2]]));
+    popTransform();
+}
 
-    var testNum = sideNumber;
-    var testColors = [];
+function drawGeomDemo(){
+
+    colors = [];
     for(var i = 0; i < sideNumber; i++){
-        testColors.push(concatColor([colors[0],colors[1],colors[2]]));
+        colors.push(concatColor([colors[0],colors[1],colors[2]]));
     }
     pushTransform();
-        shape(defcenter, testColors, testNum, defSideLen);
+        shape(defCenter, testColors, sideNumber, defSideLen);
     popTransform();
 
 }

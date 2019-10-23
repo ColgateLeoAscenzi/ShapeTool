@@ -50,8 +50,13 @@ var whiteShadow = [189/255, 212/255, 202/255, 1];
 //set new shapes to red to test position
 var red = [1,0,0,1];
 
+var scenes = ["drawTriDemo()", "drawGeomDemo()"];
+var scene = 0;
+
 
 var colors = [[1,0,0,1],[0,1,0,1],[0,0,1,1]];
+
+var angles = [60, 60, 60];
 
 //Transforms
 var transform = new AffineTransform2D();
@@ -139,11 +144,29 @@ function initGL() {
         return;
     }
 
+    //initialize
+    document.getElementById("geom-color-control").style.display = "none";
+    document.getElementById("ball-color-control").style.display = "none";
 
 
+    //triangles
+    document.getElementById("tri-angles").onchange = doChangeAngles;
+
+    document.getElementById("geom-color1").onchange = doChangeColor;
+    document.getElementById("geom-color2").onchange = doChangeColor;
+    document.getElementById("geom-color3").onchange = doChangeColor;
+
+    //geometry
     document.getElementById("sideRange").onchange = doChangeSides;
     document.getElementById("textRange").onchange = doChangeSides1;
-    document.getElementById("color").onchange = doChangeColor;
+
+    document.getElementById("geom-color4").onchange = doChangeColor;
+    document.getElementById("geom-color5").onchange = doChangeColor;
+    document.getElementById("geom-color6").onchange = doChangeColor;
+
+    //ball
+
+
 
 
     draw();    // draw the image
@@ -151,6 +174,14 @@ function initGL() {
 
 }
 /*-----------side support-------------*/
+function doChangeAngles(){
+    angles[0] = parseInt(document.getElementById("aAngle").value);
+    angles[1] = parseInt(document.getElementById("bAngle").value);
+    angles[2] = parseInt(document.getElementById("cAngle").value);
+    if((angles[0] + angles[1] + angles[2])== 180){
+        doChangeColor();
+    }
+}
 
 function doChangeSides(){
     sideNumber = document.getElementById("sideRange").value;
@@ -168,11 +199,10 @@ function doChangeSides1(){
 
 function doChangeColor(){
     for(var i = 0; i < 3; i++){
-        colors[i][0] = document.getElementById("color"+(i+1)+"R").value/255;
-        colors[i][1] = document.getElementById("color"+(i+1)+"G").value/255;
-        colors[i][2] = document.getElementById("color"+(i+1)+"B").value/255;
+        colors[i][0] = document.getElementById("geom-color"+(i+1)+"R").value/255;
+        colors[i][1] = document.getElementById("geom-color"+(i+1)+"G").value/255;
+        colors[i][2] = document.getElementById("geom-color"+(i+1)+"B").value/255;
         colors[i][3] = 1;
-        console.log("Color "+(i+1)+": " +colors[i][0]+", "+colors[i][1]+", "+colors[i][2]+", "+colors[i][3]);
     }
     draw();
 }
