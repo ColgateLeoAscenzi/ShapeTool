@@ -83,28 +83,23 @@
 
 <div id = "ball-color-control">
     <div id = "geom-control">
-        <div>Pick a number of sides</div>
-        <input type="range" min="3" max="1000" value="3" class="slider" id="sideRange">
-        <input type ="number" min = "3" max = "1000" value = 3 id = "textRange">
+        <div>Pick a number of sides (20 to 200)</div>
+        <input type="range" min="20" max="200" value="20" class="slider" id="sideRangeBall">
+        <input type ="number" min = "2" max = "200" value = "20" id = "textRangeBall">
     </div>
     <div id = "ball-color">
-        Color 1:
-        <input type ="number" min = "0" max = "255" value = 255 id = "ball-color1R">
-        <input type ="number" min = "0" max = "255" value = 0 id = "ball-color1G">
-        <input type ="number" min = "0" max = "255" value = 0 id = "ball-color1B">
+        Light Color:
+        <input type ="number" min = "0" max = "255" value = "255" id = "ball-color1R">
+        <input type ="number" min = "0" max = "255" value = "0" id = "ball-color1G">
+        <input type ="number" min = "0" max = "255" value = "0" id = "ball-color1B">
     </div>
-    <div id = "ball-color">
-        Color 2:
-        <input type ="number" min = "0" max = "255" value = 0 id = "ball-color2R">
-        <input type ="number" min = "0" max = "255" value = 255 id = "ball-color2G">
-        <input type ="number" min = "0" max = "255" value = 0 id = "ball-color2B">
+    <div id = "ball-color1">
+        Ball Color:
+        <input type ="number" min = "0" max = "255" value = "0" id = "ball-color2R">
+        <input type ="number" min = "0" max = "255" value = "255" id = "ball-color2G">
+        <input type ="number" min = "0" max = "255" value = "0" id = "ball-color2B">
     </div>
-    <div id = "ball-color">
-        Color 3:
-        <input type ="number" min = "0" max = "255" value = 0 id = "ball-color3R">
-        <input type ="number" min = "0" max = "255" value = 0 id = "ball-color3G">
-        <input type ="number" min = "0" max = "255" value = 255 id = "ball-color3B">
-    </div>
+
 </div>
 <div id="canvas-holder">
     <canvas id="webglcanvas" width="1200" height="800"></canvas>

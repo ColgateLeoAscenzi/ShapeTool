@@ -50,7 +50,7 @@ var whiteShadow = [189/255, 212/255, 202/255, 1];
 //set new shapes to red to test position
 var red = [1,0,0,1];
 
-var scenes = ["drawTriDemo()", "drawGeomDemo()"];
+var scenes = ["drawTriDemo()", "drawGeomDemo()","drawBallDemo()"];
 var scene = 0;
 
 
@@ -168,7 +168,11 @@ function initGL() {
 
 
     //ball
+    document.getElementById("sideRangeBall").onchange = doChangeSidesBall;
+    document.getElementById("textRangeBall").onchange = doChangeSides1Ball;
 
+    document.getElementById("ball-color").onchange = doChangeColorBall;
+    document.getElementById("ball-color1").onchange = doChangeColorBall;
 
 
 
@@ -179,6 +183,7 @@ function initGL() {
 /*-----------side support-------------*/
 
 function changeDrawing(){
+    resetParams();
     scene = parseInt(document.getElementById("selector").selectedIndex);
     if(parseInt(document.getElementById("selector").selectedIndex)== 0){
         document.getElementById("tri-color-control").style.display = "block";
@@ -187,18 +192,30 @@ function changeDrawing(){
         doChangeColorTri();
     }
     if(parseInt(document.getElementById("selector").selectedIndex)== 1){
+        sideNumber = 3;
         document.getElementById("tri-color-control").style.display = "none";
         document.getElementById("geom-color-control").style.display = "block";
         document.getElementById("ball-color-control").style.display = "none";
         doChangeColorGeom();
     }
     if(parseInt(document.getElementById("selector").selectedIndex)== 2){
+        sideNumber = 20;
         document.getElementById("tri-color-control").style.display = "none";
         document.getElementById("geom-color-control").style.display = "none";
         document.getElementById("ball-color-control").style.display = "block";
         doChangeColorBall();
     }
 }
+
+function resetParams(){
+    document.getElementById("sideRange").value = 3;
+    document.getElementById("textRange").value = 3;
+
+    document.getElementById("sideRangeBall").value = 20;
+    document.getElementById("textRangeBall").value = 20;
+}
+
+
 function doChangeAngles(){
     angles[0] = parseInt(document.getElementById("aAngle").value);
     angles[1] = parseInt(document.getElementById("bAngle").value);
@@ -207,20 +224,34 @@ function doChangeAngles(){
         doChangeColorTri();
     }
 }
+//sides for geom
 
 function doChangeSides(){
     sideNumber = document.getElementById("sideRange").value;
     document.getElementById("textRange").value = sideNumber;
-    console.log("Sidenumber: " +sideNumber);
     doChangeColorGeom();
 }
 
 function doChangeSides1(){
     sideNumber = document.getElementById("textRange").value;
     document.getElementById("sideRange").value = sideNumber;
-    console.log("Sidenumber: " +sideNumber);
     doChangeColorGeom();
 }
+
+//sides for ball
+function doChangeSidesBall(){
+    sideNumber = document.getElementById("sideRangeBall").value;
+    document.getElementById("textRangeBall").value = sideNumber;
+    doChangeColorBall();
+}
+
+function doChangeSides1Ball(){
+    sideNumber = document.getElementById("textRangeBall").value;
+    document.getElementById("sideRangeBall").value = sideNumber;
+    doChangeColorBall();
+}
+
+
 
 function doChangeColorTri(){
     for(var i = 0; i < 3; i++){
@@ -246,12 +277,17 @@ function doChangeColorGeom(){
 }
 
 function doChangeColorBall(){
-    for(var i = 0; i < 3; i++){
-        colors[i][0] = document.getElementById("geom-color"+(i+1)+"R1").value/255;
-        colors[i][1] = document.getElementById("geom-color"+(i+1)+"G1").value/255;
-        colors[i][2] = document.getElementById("geom-color"+(i+1)+"B1").value/255;
+    for(var i = 0; i < 2; i++){
+        console.log("ball-color"+(i+1)+"R");
+        colors[i][0] = document.getElementById("ball-color"+(i+1)+"R").value/255;
+        colors[i][1] = document.getElementById("ball-color"+(i+1)+"G").value/255;
+        colors[i][2] = document.getElementById("ball-color"+(i+1)+"B").value/255;
         colors[i][3] = 1;
 
     }
+    colors[2][0] = document.getElementById("ball-color"+2+"R").value/255;
+    colors[2][1] = document.getElementById("ball-color"+2+"G").value/255;
+    colors[2][2] = document.getElementById("ball-color"+2+"B").value/255;
+    colors[2][3] = 1;
     draw();
 }

@@ -19,3 +19,15 @@ function drawGeomDemo(){
     popTransform();
 
 }
+
+function drawBallDemo(){
+
+    angleColors = [];
+    for(var i = 0; i < sideNumber; i++){
+        angleColors.push(concatColor([colors[0],colors[1],colors[2]]));
+    }
+    pushTransform();
+        shape(defCenter, angleColors, sideNumber, defSideLen);
+    popTransform();
+
+}
