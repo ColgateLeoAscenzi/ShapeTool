@@ -58,7 +58,8 @@ function filledTriangle(color, vertices){
 //     popTransform();
 //
 // }
-function shape(center,newCenter, color, sideNum, sideLength){
+function shape(center,nextCenter, color, sideNum, sideLength){
+    console.log("DO I STILL HAVE THE SAME: "+nextCenter);
     var sumOfIntAng = (sideNum-2)*180;
     var newColor = [];
     //generates new uniform colors if not specified
@@ -77,9 +78,9 @@ function shape(center,newCenter, color, sideNum, sideLength){
         for(var i = 0; i < sideNum; i++){
             //makes triangles and rotate
             pushTransform();
-                transform.rotateAbout(newCenter[0], newCenter[1], radians(360/sideNum)*i);
+                transform.rotate(radians(360/sideNum)*i);
                 var tempTriCoords = genTriangle(center, sideLength, [(360/sideNum), (180-(360/sideNum))/2,(180-(360/sideNum))/2]);
-                tempTriCoords = fixCenter(tempTriCoords, genTriangle(center, sideLength, newCenter[0], newCenter[1],(radians(360/sideNum)*i)));
+                tempTriCoords = fixCenter(tempTriCoords, nextCenter, (360/sideNum)*i);
                 filledTriangle(newColor[i], tempTriCoords);
             popTransform();
 
@@ -104,7 +105,7 @@ function genTriangle(center, side, angles){
     return triCoord;
 }
 
-function fixCenter(oldCoords, newCenter){
+function fixCenter(oldCoords, nextCenter, angle){
     newCoords = []
     // newCoords[0] = oldCoords[0];
     // newCoords[1] = oldCoords[1];
@@ -112,8 +113,11 @@ function fixCenter(oldCoords, newCenter){
     // newCoords[3] = oldCoords[3];
     // newCoords[4] = oldCoords[4];
     // newCoords[5] = oldCoords[5];
-    newCoords[0] = newCenter[0];
-    newCoords[1] = newCenter[1];
+
+    nextCenter = unRotate([oldCoords[0], oldCoords[1]], nextCenter, angle);
+    console.log("Returned unrotated value: "+nextCenter)
+    newCoords[0] = nextCenter[0];
+    newCoords[1] = nextCenter[1];
     newCoords[2] = oldCoords[2];
     newCoords[3] = oldCoords[3];
     newCoords[4] = oldCoords[4];
@@ -121,6 +125,26 @@ function fixCenter(oldCoords, newCenter){
 
     return newCoords;
 }
+
+function unRotate(oldC, newC, angle){
+    console.log("Old new Center"+oldC);
+    console.log("New new center"+newC);
+
+    //new coordinate and remove offset from old center, normally 0
+    var x1 = newC[0]-oldC[0];
+    var y1 = newC[1]-oldC[1];
+    console.log("X AND Y: "+x1+" "+y1);
+    //convert to polar
+    var p = cartToPolar(x1, y1);
+    console.log("POLAR COORD: "+p);
+    //rotate backwards by angle convert to cart
+    var nC = polarToCart(p[0], p[1]-angle);
+
+    //add the offset back
+    return [nC[0]+ oldC[0], nC[1]+oldC[1]];
+
+}
+
 
 //-------Actual shapes to draw-----------//
 function triangle(center, color, side){
@@ -172,16 +196,22 @@ function polarToCart(pPoint) {
 
 function cartToPolar(cPoint){
     //point= = [x, y]
-    var x = cPoint[0];
-    var y = cPoint[1];
-    return [Math.sqrt(x**2 + y**2), Math.atan(y/x)*180/Math.PI];
+    var x = parseInt(cPoint[0]);
+    var y = parseInt(cPoint[1]);
+    console.log("X AND Y THAT CART TO POLAR ARE GETTING: "+x+" "+y);
+    if(x == "0"){
+        return [Math.sqrt(x**2 + y**2), 0];
+    }
+    else{
+        return [Math.sqrt(x**2 + y**2), Math.atan(y/x)*180/Math.PI];
+    }
 }
 
 function shinePos(lightPos, circleCenter){
-    var lx = lightPos[0];
-    var ly = lightPos[1];
-    var cx = circleCenter[0];
-    var cy = circleCenter[1];
+    var lx = parseInt(lightPos[0]);
+    var ly = parseInt(lightPos[1]);
+    var cx = parseInt(circleCenter[0]);
+    var cy = parseInt(circleCenter[1]);
 
     //subtract circle center from lightsource to get lightsource adjusted to 0
     //convert to polar and shorten radius by theoretical Z axis, here 1/7th of

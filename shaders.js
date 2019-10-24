@@ -186,7 +186,6 @@ function initGL() {
 /*-----------side support-------------*/
 function doChangeLight(){
     lightposition = [parseInt(document.getElementById("lightSlider").value)/100, 0.8];
-    console.log(lightposition);
     doChangeColorBall();
 }
 function changeDrawing(){
@@ -285,7 +284,6 @@ function doChangeColorGeom(){
 
 function doChangeColorBall(){
     for(var i = 0; i < 2; i++){
-        console.log("ball-color"+(i+1)+"R");
         colors[i][0] = document.getElementById("ball-color"+(i+1)+"R").value/255;
         colors[i][1] = document.getElementById("ball-color"+(i+1)+"G").value/255;
         colors[i][2] = document.getElementById("ball-color"+(i+1)+"B").value/255;

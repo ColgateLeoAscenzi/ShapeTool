@@ -26,22 +26,26 @@ function drawBallDemo(){
     for(var i = 0; i < sideNumber; i++){
         angleColors.push(concatColor([colors[0],colors[1],colors[2]]));
     }
-    pushTransform();
-        transform.translate(lightposition[0], lightposition[1]);
-        shape(defCenter,defCenter, [colors[0]], 30, 0.1);
-    popTransform();
+    // //light ball
+    // pushTransform();
+    //     transform.translate(lightposition[0], lightposition[1]);
+    //     shape(defCenter,defCenter, [colors[0]], 30, 0.1);
+    // popTransform();
     //calculate newcenter with
     //lightposition and defCenter
+    console.log("Light Position: "+lightposition)
+    console.log("TRYING THIS CENTER POINT: "+defCenter);
     var newCenter = shinePos(lightposition, defCenter);
-    console.log("NewCenter: "+newCenter);
-
+    console.log("GETTING THIS POINT BACK: "+newCenter);
+    //actual ball
     pushTransform();
-        shape(defCenter,defCenter, angleColors, sideNumber, defSideLen);
+        shape(defCenter, newCenter, angleColors, sideNumber, defSideLen);
     popTransform();
 
-    pushTransform();
-    transform.translate(newCenter[0], newCenter[1]);
-        shape(defCenter,defCenter, [[0,0,1,1]], 30, 0.1);
-    popTransform();
+    // //shiny light
+    // pushTransform();
+    // transform.translate(newCenter[0], newCenter[1]);
+    //     shape(defCenter, defCenter, [[0,0,1,1]], 30, 0.1);
+    // popTransform();
 
 }
