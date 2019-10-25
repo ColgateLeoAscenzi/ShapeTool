@@ -84,7 +84,7 @@ function shape(center, newC, color, sideNum, sideLength){
             pushTransform();
                 transform.rotate(radians(360/sideNum)*i);
                 var tempTriCoords = genTriangle(center, sideLength, [(360/sideNum), (180-(360/sideNum))/2,(180-(360/sideNum))/2]);
-                tempTriCoords = fixCenter(tempTriCoords, newC, radians(360/sideNum)*i);
+                tempTriCoords = fixCenter(tempTriCoords, newC, radians(360/sideNum)*i, sideNum);
                 filledTriangle(newColor[i], tempTriCoords);
             popTransform();
 
@@ -109,9 +109,9 @@ function genTriangle(center, side, angles){
     return triCoord;
 }
 
-function fixCenter(oldCoords, newC, angle){
+function fixCenter(oldCoords, newC, angle, sideNum){
     newCoords = []
-    var unRotated = unrotate([newC[0], newC[1]], angle);
+    var unRotated = unrotate([newC[0], newC[1]], angle, sideNum);
     newCoords[0] = unRotated[0];
     newCoords[1] = unRotated[1];
     newCoords[2] = oldCoords[2];
@@ -138,10 +138,11 @@ function hexagon(center, color, side){
 }
 
 //*------------------ Helpers ---------------------------//
-function unrotate(oldPoint, rotationAngle){
-    var nP = [oldPoint[0], oldPoint[1]];
+function unrotate(oldPoint, rotationAngle, sideNum){
+    var sumOfIntAng = (sideNum-2)*180;
+    var nP = [oldPoint[0]*sideNum/3, oldPoint[1]*sideNum/3];
     var nPP = cartToPolar(nP);
-    var nC = polarToCart([nPP[0], nPP[1]-degrees(rotationAngle)]);
+    var nC = polarToCart([nPP[0], nPP[1]-degrees(rotationAngle)-((-sumOfIntAng)/(2*sideNum))]);
     return nC;
 }
 
@@ -205,7 +206,7 @@ function shinePos(lightPos, circleCenter){
     //back to get the official light center and return it
     var shineP = cartToPolar([lx-cx,ly-cy]);
 
-    var shineC = polarToCart([shineP[0]/3, shineP[1]]);
+    var shineC = polarToCart([shineP[0]/5, shineP[1]]);
 
     shineC[0]+=cx;
     shineC[1]+=cy;

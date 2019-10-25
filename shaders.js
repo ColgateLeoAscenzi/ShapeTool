@@ -60,6 +60,9 @@ var angles = [60, 60, 60];
 
 var lightposition = [-0.7, 0.8];
 
+var laser = false;
+var lamp = false;
+
 //Transforms
 var transform = new AffineTransform2D();
 var transformStack = [];
@@ -177,6 +180,11 @@ function initGL() {
     document.getElementById("ball-color").onchange = doChangeColorBall;
     document.getElementById("ball-color1").onchange = doChangeColorBall;
 
+    document.getElementById("lampCheck").checked = false
+    document.getElementById("laserCheck").checked = false
+    document.getElementById("lampCheck").onchange = doChangeLamp;
+    document.getElementById("laserCheck").onchange = doChangeLaser;
+
 
 
     draw();    // draw the image
@@ -184,11 +192,32 @@ function initGL() {
 
 }
 /*-----------side support-------------*/
+function doChangeLamp(){
+    if(document.getElementById("lampCheck").checked){
+        lamp = true;
+    }
+    else{
+        lamp = false;
+    }
+    doChangeColorBall();
+}
+
+function doChangeLaser(){
+    if(document.getElementById("laserCheck").checked){
+        laser = true;
+    }
+    else{
+        laser = false;
+    }
+    doChangeColorBall();
+}
+
 function doChangeLight(){
     lightposition = [parseInt(document.getElementById("lightSlider").value)/100, 0.8];
     console.log(lightposition);
     doChangeColorBall();
 }
+
 function changeDrawing(){
     resetParams();
     scene = parseInt(document.getElementById("selector").selectedIndex);
