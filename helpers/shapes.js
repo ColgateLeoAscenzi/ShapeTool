@@ -1,4 +1,9 @@
-
+// newCoords[0] = oldCoords[0];
+// newCoords[1] = oldCoords[1];
+// newCoords[2] = oldCoords[2];
+// newCoords[3] = oldCoords[3];
+// newCoords[4] = oldCoords[4];
+// newCoords[5] = oldCoords[5];
 
 // -------------- FILLED SHAPE FUNCTIONS -----------------------//
 function filledTriangle(color, vertices){
@@ -58,7 +63,7 @@ function filledTriangle(color, vertices){
 //     popTransform();
 //
 // }
-function shape(center,newCenter, color, sideNum, sideLength){
+function shape(center, newC, color, sideNum, sideLength){
     var sumOfIntAng = (sideNum-2)*180;
     var newColor = [];
     //generates new uniform colors if not specified
@@ -77,9 +82,9 @@ function shape(center,newCenter, color, sideNum, sideLength){
         for(var i = 0; i < sideNum; i++){
             //makes triangles and rotate
             pushTransform();
-                transform.rotateAbout(newCenter[0], newCenter[1], radians(360/sideNum)*i);
+                transform.rotate(radians(360/sideNum)*i);
                 var tempTriCoords = genTriangle(center, sideLength, [(360/sideNum), (180-(360/sideNum))/2,(180-(360/sideNum))/2]);
-                tempTriCoords = fixCenter(tempTriCoords, genTriangle(center, sideLength, newCenter[0], newCenter[1],(radians(360/sideNum)*i)));
+                tempTriCoords = fixCenter(tempTriCoords, newC, radians(360/sideNum)*i);
                 filledTriangle(newColor[i], tempTriCoords);
             popTransform();
 
@@ -96,28 +101,24 @@ function genTriangle(center, side, angles){
     triCoord.push(center[1]);
 
     var b = (side * Math.sin(radians(angles[1])))/Math.sin(radians(angles[0]));
-    var y = b*Math.sin(radians(angles[0]));
-    var x = b*Math.cos(radians(angles[0]));
+    var dy = b*Math.sin(radians(angles[0]));
+    var dx = b*Math.cos(radians(angles[0]));
 
-    triCoord.push(center[0]+x);
-    triCoord.push(center[0]+y);
+    triCoord.push(center[0]+dx);
+    triCoord.push(center[0]+dy);
     return triCoord;
 }
 
-function fixCenter(oldCoords, newCenter){
+function fixCenter(oldCoords, newC, angle){
     newCoords = []
-    // newCoords[0] = oldCoords[0];
-    // newCoords[1] = oldCoords[1];
-    // newCoords[2] = oldCoords[2];
-    // newCoords[3] = oldCoords[3];
-    // newCoords[4] = oldCoords[4];
-    // newCoords[5] = oldCoords[5];
-    newCoords[0] = newCenter[0];
-    newCoords[1] = newCenter[1];
+    var unRotated = unrotate([newC[0], newC[1]], angle);
+    newCoords[0] = unRotated[0];
+    newCoords[1] = unRotated[1];
     newCoords[2] = oldCoords[2];
     newCoords[3] = oldCoords[3];
     newCoords[4] = oldCoords[4];
     newCoords[5] = oldCoords[5];
+
 
     return newCoords;
 }
@@ -137,6 +138,13 @@ function hexagon(center, color, side){
 }
 
 //*------------------ Helpers ---------------------------//
+function unrotate(oldPoint, rotationAngle){
+    var nP = [oldPoint[0], oldPoint[1]];
+    var nPP = cartToPolar(nP);
+    var nC = polarToCart([nPP[0], nPP[1]-degrees(rotationAngle)]);
+    return nC;
+}
+
 function uniformColorGen(color, sides){
     var colorArr = [];
     for(var i = 0; i < sides; i++){
@@ -163,25 +171,27 @@ function radians( degrees ) {
   return degrees * Math.PI / 180.0;
 }
 
+function degrees( radians ) {
+  return radians * 180 / Math.PI;
+}
+
+
 function polarToCart(pPoint) {
     //point = [r, degrees]
     var r = pPoint[0];
-    var degrees = pPoint[1]
-    return [r*Math.cos(radians(degrees)), r*Math.sin(radians(degrees))];
+    var degreess = pPoint[1]
+    return [r*Math.cos(radians(degreess)), r*Math.sin(radians(degreess))];
 }
 
 function cartToPolar(cPoint){
     //point= = [x, y]
-    var x = cPoint[0];
-    var y = cPoint[1];
-    if(x == 0 && y > 0){
-      return [Math.sqrt(x**2 + y**2), Math.atan(y/x)*180/Math.PI];
-    }
-    else if(x == 0 && y >= 0){
-      return [Math.sqrt(x**2 + y**2), Math.atan(y/x)*180/Math.PI];
-    }
-    return [Math.sqrt(x**2 + y**2), Math.atan(y/x)*180/Math.PI];
+    var nx = cPoint[0];
+    var ny = cPoint[1];
+
+    return [Math.sqrt(nx*nx + ny*ny), Math.atan2(ny, nx)*(180.0/Math.PI)];
 }
+
+
 
 function shinePos(lightPos, circleCenter){
     var lx = lightPos[0];
@@ -194,14 +204,8 @@ function shinePos(lightPos, circleCenter){
     //original R. Convert back to cartesian centered around 0, then add circleCenter
     //back to get the official light center and return it
     var shineP = cartToPolar([lx-cx,ly-cy]);
-    if(lx >= 0){
-        var shineC = polarToCart([shineP[0]/5, shineP[1]]);
 
-    }
-    else{
-        var shineC = polarToCart([-shineP[0]/5, shineP[1]]);
-
-    }
+    var shineC = polarToCart([shineP[0]/3, shineP[1]]);
 
     shineC[0]+=cx;
     shineC[1]+=cy;

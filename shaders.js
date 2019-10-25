@@ -234,20 +234,20 @@ function doChangeAngles(){
 //sides for geom
 
 function doChangeSides(){
-    sideNumber = document.getElementById("sideRange").value;
+    sideNumber = parseInt(document.getElementById("sideRange").value);
     document.getElementById("textRange").value = sideNumber;
     doChangeColorGeom();
 }
 
 function doChangeSides1(){
-    sideNumber = document.getElementById("textRange").value;
+    sideNumber = parseInt(document.getElementById("textRange").value);
     document.getElementById("sideRange").value = sideNumber;
     doChangeColorGeom();
 }
 
 //sides for ball
 function doChangeSidesBall(){
-    sideNumber = document.getElementById("sideRangeBall").value;
+    sideNumber = parseInt(document.getElementById("sideRangeBall").value);
     document.getElementById("textRangeBall").value = sideNumber;
     doChangeColorBall();
 }
