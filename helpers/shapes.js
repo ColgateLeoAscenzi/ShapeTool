@@ -174,6 +174,12 @@ function cartToPolar(cPoint){
     //point= = [x, y]
     var x = cPoint[0];
     var y = cPoint[1];
+    if(x == 0 && y > 0){
+      return [Math.sqrt(x**2 + y**2), Math.atan(y/x)*180/Math.PI];
+    }
+    else if(x == 0 && y >= 0){
+      return [Math.sqrt(x**2 + y**2), Math.atan(y/x)*180/Math.PI];
+    }
     return [Math.sqrt(x**2 + y**2), Math.atan(y/x)*180/Math.PI];
 }
 
