@@ -1,4 +1,5 @@
 var defCenter = [0,0];
+var defCenter1 = [1,0];
 var defSideLen = 1;
 
 function drawTriDemo(){
@@ -33,13 +34,21 @@ function drawBallDemo(){
     }
     var newCenter = shinePos(lightposition, defCenter);
 
+    drawShadow(newCenter);
+
+
     pushTransform();
         shape(defCenter, newCenter, angleColors, sideNumber, defSideLen);
     popTransform();
 
+    // pushTransform();
+    //     shape(defCenter1, newCenter, angleColors, sideNumber, defSideLen);
+    // popTransform();
+
     if(laser == true){
         drawLaser(newCenter);
     }
+
 
 }
 
@@ -56,4 +65,13 @@ function drawLaser(newC){
     transform.translate(newC[0], newC[1]);
         shape(defCenter, defCenter,  [colors[0]], 30, 0.1);
     popTransform();
+}
+
+function drawShadow(newC){
+    pushTransform();
+    transform.translate(-(newC[0]), -(newC[1]+0.3));
+    transform.scale(10,1);
+        shape(defCenter, defCenter,  [[0.6,0.6,0.6,1]], 30, 0.1);
+    popTransform();
+
 }
