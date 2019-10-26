@@ -1,5 +1,4 @@
 var defCenter = [0,0];
-var defCenter1 = [1,0];
 var defSideLen = 1;
 
 function drawTriDemo(){

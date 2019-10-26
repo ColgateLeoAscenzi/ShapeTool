@@ -105,7 +105,7 @@ function genTriangle(center, side, angles){
     var dx = b*Math.cos(radians(angles[0]));
 
     triCoord.push(center[0]+dx);
-    triCoord.push(center[0]+dy);
+    triCoord.push(center[1]+dy);
     return triCoord;
 }
 
