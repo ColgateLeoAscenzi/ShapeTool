@@ -23,27 +23,34 @@ function drawGeomDemo(){
 }
 
 function drawBallDemo(){
+
+    var newCenter = shinePos(lightposition, defCenter);
+
+
     pushTransform();
         transform.scale(0.5);
+        //background
         drawBackground();
+
+        //draw undershadow floor and floor
         pushTransform();
             transform.translate(0.01,-0.05);
             drawFloor([0.05,0.05,0.05,1]);
         popTransform();
         drawFloor([0.1,0.1,0.1,1]);
+
+        //make new colours
         angleColors = [];
         for(var i = 0; i < sideNumber; i++){
             angleColors.push(concatColor([colors[0],colors[1],colors[2]]));
         }
 
         if(lamp == true){
-            drawLamp();
-
+            drawLamp(newCenter);
         }
-        var newCenter = shinePos(lightposition, defCenter);
+
 
         drawShadow(newCenter);
-
 
 
         pushTransform();
@@ -66,24 +73,23 @@ function drawBallDemo(){
 
 }
 
-function drawLamp(){
+function drawLamp(newC){
     //the light
     pushTransform();
         transform.translate(lightposition[0], lightposition[1]);
-        shape(defCenter,defCenter, [colors[0]], 30, 0.1);
+        shape(defCenter,defCenter, [[colors[0][0],colors[0][1],colors[0][2],1]], 30, 0.1);
     popTransform();
 }
 
 function drawLaser(newC){
     pushTransform();
     transform.translate(newC[0], newC[1]);
-        shape(defCenter, defCenter,  [colors[0]], 30, 0.1);
+        shape(defCenter, defCenter,  [[colors[0][0],colors[0][1],colors[0][2],1]], 30, 0.08);
     popTransform();
 }
 
 function drawShadow(newC){
     var shadowColor = calculateShadowColor(false);
-    console.log(shadowColor);
     pushTransform();
     transform.translate(-(newC[0]), -(newC[1]+0.285));
     //transform.scale(10,1);
@@ -99,7 +105,7 @@ function drawBackground(){
     //transform.scale(10,1);
     //transform.xshear(5);
     transform.scale(10,10);
-        shape(defCenter, defCenter,  [[1,1,1,1]], 4, defSideLen);
+        shape(defCenter, defCenter,  [[0.95,0.95,0.95,1]], 4, defSideLen);
     popTransform();
 
 }
