@@ -71,9 +71,11 @@ function drawLaser(newC){
 
 function drawShadow(newC){
     pushTransform();
-    transform.translate(-(newC[0]), -(newC[1]+0.35));
-    transform.scale(10,1);
-        shape(defCenter, defCenter,  [[0.6,0.6,0.6,1]], 30, 0.1);
+    transform.translate(-(newC[0]), -(newC[1]+0.3));
+    //transform.scale(10,1);
+    transform.xshear(-newC[0]*3);
+    transform.scale(1,0.2);
+        shape(defCenter, defCenter,  [[0.6,0.6,0.6,1]], sideNumber, defSideLen);
     popTransform();
 
 }
