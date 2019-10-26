@@ -100,7 +100,6 @@ function genTriangle(center, side, angles){
     triCoord.push(center[0]+side);
     triCoord.push(center[1]);
 
-    console.log("ANGLES ARE:"+angles);
     var b = (side * Math.sin(radians(angles[1])))/Math.sin(radians(angles[2]));
     var dy = b*Math.sin(radians(angles[0]));
     var dx = b*Math.cos(radians(angles[0]));
@@ -217,4 +216,29 @@ function shinePos(lightPos, circleCenter){
 
     return shineC;
 
+}
+
+function calculateShadowColor(defaultVal){
+    if(defaultVal == true){
+        return [[0.6,0.6,0.6,1]];
+    }
+    else{
+        //subtract each time the alpha value of the ball
+        var sub = colors[1][3];
+        var lightColor = colors[0];
+        var ballColor = colors[1];
+        var avg = []
+        //merges the colors
+        for(var i = 0; i < lightColor.length; i++){
+            avg.push((lightColor[i]+ballColor[i])/2);
+        }
+        //makes sure they can't go above 255 or below 0
+        var newCol = []
+        for(var i = 0; i < 3; i++){
+            newCol.push(Math.min(Math.max(0, avg[i]-sub), 255));
+        }
+        newCol.push(1);
+
+        return [newCol];
+    }
 }

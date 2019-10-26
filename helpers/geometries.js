@@ -25,6 +25,12 @@ function drawGeomDemo(){
 function drawBallDemo(){
     pushTransform();
         transform.scale(0.5);
+        drawBackground();
+        pushTransform();
+            transform.translate(0.01,-0.05);
+            drawFloor([0.05,0.05,0.05,1]);
+        popTransform();
+        drawFloor([0.1,0.1,0.1,1]);
         angleColors = [];
         for(var i = 0; i < sideNumber; i++){
             angleColors.push(concatColor([colors[0],colors[1],colors[2]]));
@@ -37,6 +43,12 @@ function drawBallDemo(){
         var newCenter = shinePos(lightposition, defCenter);
 
         drawShadow(newCenter);
+
+
+
+        pushTransform();
+            shape(defCenter, defCenter, angleColors, [[1,0,0,1]], defSideLen);
+        popTransform();
 
 
         pushTransform();
@@ -70,12 +82,34 @@ function drawLaser(newC){
 }
 
 function drawShadow(newC){
+    var shadowColor = calculateShadowColor(false);
+    console.log(shadowColor);
     pushTransform();
-    transform.translate(-(newC[0]), -(newC[1]+0.3));
+    transform.translate(-(newC[0]), -(newC[1]+0.285));
     //transform.scale(10,1);
-    transform.xshear(-newC[0]*3);
+    transform.xshear(-newC[0]*4);
     transform.scale(1,0.2);
-        shape(defCenter, defCenter,  [[0.6,0.6,0.6,1]], sideNumber, defSideLen);
+        shape(defCenter, defCenter,  shadowColor, sideNumber, defSideLen);
+    popTransform();
+
+}
+
+function drawBackground(){
+    pushTransform();
+    //transform.scale(10,1);
+    //transform.xshear(5);
+    transform.scale(10,10);
+        shape(defCenter, defCenter,  [[1,1,1,1]], 4, defSideLen);
+    popTransform();
+
+}
+
+function drawFloor(floorColor){
+    pushTransform();
+    transform.translate(0,-1);
+    transform.xshear(1.5);
+    transform.scale(3,1);
+        shape(defCenter, defCenter,  [floorColor], 4, defSideLen);
     popTransform();
 
 }

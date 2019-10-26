@@ -136,6 +136,10 @@ function initGL() {
         var prog = createProgram( gl, vertexShaderSource, fragmentShaderSource );
         gl.useProgram(prog);
 
+        gl.blendFuncSeparate( gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA,
+                                  gl.ZERO, gl.ONE );
+        gl.enable(gl.BLEND)
+
         vertexAttributeLocation = gl.getAttribLocation(prog, "vertexCoords");
         transformUniformLocation = gl.getUniformLocation(prog, "coordinateTransform");
         colorAttribLocation = gl.getAttribLocation(prog, "vertexColor");
@@ -214,7 +218,6 @@ function doChangeLaser(){
 
 function doChangeLight(){
     lightposition = [parseInt(document.getElementById("lightSlider").value)/100, lightposition[1]];
-    console.log(lightposition);
     doChangeColorBall();
 }
 
@@ -294,7 +297,7 @@ function doChangeColorTri(){
         colors[i][0] = document.getElementById("geom-color"+(i+1)+"R").value/255;
         colors[i][1] = document.getElementById("geom-color"+(i+1)+"G").value/255;
         colors[i][2] = document.getElementById("geom-color"+(i+1)+"B").value/255;
-        colors[i][3] = 1;
+        colors[i][3] = 1.0;
 
     }
     draw();
@@ -306,7 +309,7 @@ function doChangeColorGeom(){
         colors[i][0] = document.getElementById("geom-color"+(i+1)+"R1").value/255;
         colors[i][1] = document.getElementById("geom-color"+(i+1)+"G1").value/255;
         colors[i][2] = document.getElementById("geom-color"+(i+1)+"B1").value/255;
-        colors[i][3] = 1;
+        colors[i][3] = 1.0;
 
     }
     draw();
@@ -314,16 +317,15 @@ function doChangeColorGeom(){
 
 function doChangeColorBall(){
     for(var i = 0; i < 2; i++){
-        console.log("ball-color"+(i+1)+"R");
         colors[i][0] = document.getElementById("ball-color"+(i+1)+"R").value/255;
         colors[i][1] = document.getElementById("ball-color"+(i+1)+"G").value/255;
         colors[i][2] = document.getElementById("ball-color"+(i+1)+"B").value/255;
-        colors[i][3] = 1;
+        colors[i][3] = document.getElementById("ball-color"+2+"A").value/255;
 
     }
     colors[2][0] = document.getElementById("ball-color"+2+"R").value/255;
     colors[2][1] = document.getElementById("ball-color"+2+"G").value/255;
     colors[2][2] = document.getElementById("ball-color"+2+"B").value/255;
-    colors[2][3] = 1;
+    colors[2][3] =  document.getElementById("ball-color"+2+"A").value/255;
     draw();
 }
