@@ -58,7 +58,7 @@ var colors = [[1,0,0,1],[0,1,0,1],[0,0,1,1]];
 
 var angles = [60, 60, 60];
 
-var lightposition = [-0.7, 0.8];
+var lightposition = [-0.7, 1.8];
 
 var laser = false;
 var lamp = false;
@@ -213,7 +213,7 @@ function doChangeLaser(){
 }
 
 function doChangeLight(){
-    lightposition = [parseInt(document.getElementById("lightSlider").value)/100, 0.8];
+    lightposition = [parseInt(document.getElementById("lightSlider").value)/100, lightposition[1]];
     console.log(lightposition);
     doChangeColorBall();
 }

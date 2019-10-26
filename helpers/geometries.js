@@ -9,45 +9,48 @@ function drawTriDemo(){
 }
 
 function drawGeomDemo(){
-
-    angleColors = [];
-    for(var i = 0; i < sideNumber; i++){
-        angleColors.push(concatColor([colors[0],colors[1],colors[2]]));
-    }
     pushTransform();
-        shape(defCenter, defCenter, angleColors, sideNumber, defSideLen);
+        transform.scale(0.5);
+        angleColors = [];
+        for(var i = 0; i < sideNumber; i++){
+            angleColors.push(concatColor([colors[0],colors[1],colors[2]]));
+        }
+        pushTransform();
+            shape(defCenter, defCenter, angleColors, sideNumber, defSideLen);
+        popTransform();
     popTransform();
 
 }
 
 function drawBallDemo(){
-
-    angleColors = [];
-    for(var i = 0; i < sideNumber; i++){
-        angleColors.push(concatColor([colors[0],colors[1],colors[2]]));
-    }
-
-    if(lamp == true){
-        drawLamp();
-
-    }
-    var newCenter = shinePos(lightposition, defCenter);
-
-    drawShadow(newCenter);
-
-
     pushTransform();
-        shape(defCenter, newCenter, angleColors, sideNumber, defSideLen);
+        transform.scale(0.5);
+        angleColors = [];
+        for(var i = 0; i < sideNumber; i++){
+            angleColors.push(concatColor([colors[0],colors[1],colors[2]]));
+        }
+
+        if(lamp == true){
+            drawLamp();
+
+        }
+        var newCenter = shinePos(lightposition, defCenter);
+
+        drawShadow(newCenter);
+
+
+        pushTransform();
+            shape(defCenter, newCenter, angleColors, sideNumber, defSideLen);
+        popTransform();
+
+        // pushTransform();
+        //     shape(defCenter1, newCenter, angleColors, sideNumber, defSideLen);
+        // popTransform();
+
+        if(laser == true){
+            drawLaser(newCenter);
+        }
     popTransform();
-
-    // pushTransform();
-    //     shape(defCenter1, newCenter, angleColors, sideNumber, defSideLen);
-    // popTransform();
-
-    if(laser == true){
-        drawLaser(newCenter);
-    }
-
 
 }
 
@@ -68,7 +71,7 @@ function drawLaser(newC){
 
 function drawShadow(newC){
     pushTransform();
-    transform.translate(-(newC[0]), -(newC[1]+0.3));
+    transform.translate(-(newC[0]), -(newC[1]+0.35));
     transform.scale(10,1);
         shape(defCenter, defCenter,  [[0.6,0.6,0.6,1]], 30, 0.1);
     popTransform();
